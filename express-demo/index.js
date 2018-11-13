@@ -1,26 +1,33 @@
-
-const express = require('express');
+const startupDebugger = require("debug")("app:startup");
+const dbDebugger = require("debug")("app:db");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const config = require("config");
+const logger = require("./middleware/logger");
+const express = require("express");
+const courses = require("./routes/courses");
+const home = require("./routes/home");
 const app = express();
 
-const courses = [
-    {id: 1, name: 'course1'},
-    {id: 2, name: 'course2'},
-    {id: 3, name: 'course3'}
-];
+app.set("view engine", "ejs");
+app.set("views", "./views");
 
-app.get('/', (req, res) => {
-    res.send('hello world');
-});
+app.use(express.json());
+app.use(express.static("public"));
+app.use(logger); //custom midware
+app.use("/api/courses", courses);
+app.use("/", home);
+if (app.get("env") === "development") {
+  // app.use(helmet());
+  app.use(morgan("tiny"));
+  startupDebugger("Morgen enabled");
+}
 
-app.get('/api/courses', (req, res) => {
-    res.send( courses );
-});
+dbDebugger("Connected to db....");
 
-app.get('/api/courses/:id', (req, res) => {
-    const course = courses.find(c => c.id === parseInt(req.params.id));
-    console.log(!course);
-    if(!course) res.status(404).send('course not found');
-    res.send(course);
-}); 
+// console.log("Application Name:" + config.get("name"));
 
-app.listen(3000, () => console.log('Listening on 30000'));
+// console.log("Mail Server:" + config.get("mail.host"));
+// console.log("Mail Pass:" + config.get("mail.password"));
+
+app.listen(3000, () => console.log("Listening on 30000"));
