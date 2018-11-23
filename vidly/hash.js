@@ -1,3 +1,5 @@
+//just demo how auth work
+
 const bcrypt = require("bcrypt");
 
 async function run() {

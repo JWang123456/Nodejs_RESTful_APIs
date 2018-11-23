@@ -5,10 +5,10 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models/user");
 
-router.get("/", async (req, res) => {
-  const user = await User.find().sort({ name: 1 });
-  res.send(user);
-});
+// router.get("/", async (req, res) => {
+//   const user = await User.find().sort({ name: 1 });
+//   res.send(user);
+// });
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);

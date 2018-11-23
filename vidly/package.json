@@ -12,10 +12,12 @@
   "dependencies": {
     "config": "^3.0.0",
     "express": "^4.16.4",
+    "express-async-errors": "^3.1.1",
     "fawn": "^2.1.5",
     "joi": "^13.7.0",
     "joi-objectid": "^2.0.0",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.3.13"
+    "mongoose": "^5.3.13",
+    "winston": "^2.4.0"
   }
 }

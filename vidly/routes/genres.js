@@ -3,7 +3,8 @@ const router = express.Router();
 const { Genre, validate } = require("../models/genre");
 const auth = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
+  throw new Error("testing winston");
   const genre = await Genre.find().sort({ name: -1 });
   res.send(genre);
 });
